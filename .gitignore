@@ -1,0 +1,10 @@
+staff.sql
+.gitignore
+*.db
+*.csv
+cred.py
+files/*
+database.py
+**/__pycache__/*
+sms.py
+sendEmail.py
