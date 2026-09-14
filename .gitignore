@@ -1,4 +1,5 @@
-staff.sql
+staff_data.sql
+user_data.sql
 .gitignore
 *.db
 *.csv

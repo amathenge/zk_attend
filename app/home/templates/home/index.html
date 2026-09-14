@@ -1,12 +1,17 @@
 {% extends "base.html" %}
+{% from "utils.j2" import nav %}
 
 {% block title %}FA Attendance{% endblock %}
-
+{% set user = session['user'] %}
 {% block content %}
-
 <div class="row justify-content-center">
     <div class="col">
-        <p class="text-center">Home Page of Attendance App</p>
+        {{ nav(user) }}
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <p class="text-center h3 fw-bold">Fair Acres Attendance</p>
     </div>
 </div>
 

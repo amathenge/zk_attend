@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from "utils.j2" import zklogin %}
+
+{% block title %}Attendance Logger - LOGIN{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-4">
+        {{ zklogin(url_for('bp_auth.login')) }}
+    </div>
+</div>
+{% if message %}
+<div class="row justify-content-center">
+    <div class="col-12 border d-flex justify-content-center">
+        <p class="fw-bold">{{ message }}</p>
+</div>
+</div>
+{% endif %}    
+
+
+{% endblock %}

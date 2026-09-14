@@ -23,6 +23,9 @@ punch_mapping = {
     3: "Break In"
 }
 
+attend_file = None
+user_file = None
+
 try:
     print(f"Connecting to ZKTeco K40 at {DEVICE_IP}...")
     conn = zk.connect()
@@ -78,5 +81,7 @@ finally:
         conn.disconnect()
         print("\nDisconnected safely from device.")
 
-    attend_file.close()
-    user_file.close()
+    if attend_file is not None:
+        attend_file.close()
+    if user_file is not None:
+        user_file.close()
