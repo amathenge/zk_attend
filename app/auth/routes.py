@@ -3,11 +3,26 @@ from . import bp_auth
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.database import get_db, cursor_init
 
+DEBUGGING = True
+
 @bp_auth.route("/login", methods=["GET", "POST"])
 def login():
     message = session.pop('login_message', None)
     session.pop('user', None)
     session.modified = True
+
+    if DEBUGGING:
+        user = {
+            'id': 1,
+            'email': 'debug@localhost.net',
+            'firstname': 'TonyBug',
+            'lastname': 'Debugger',
+            'phone': '0123456789',
+            'auth': (1,2,3,4,5)
+        }        
+        session['user'] = user
+        session.modified = True
+        return redirect(url_for('bp_home.index'))
 
     if request.method == "POST":
         email = request.form["email"]

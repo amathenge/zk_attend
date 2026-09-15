@@ -76,6 +76,3 @@ def filters_init(app):
     app.add_template_filter(isdatamgr)
     app.add_template_filter(isusermgr)
     app.add_template_filter(hasauth)
-    print("REGISTERED FILTERS:", [k for k in app.jinja_env.filters.keys() if 'is' in k or 'to' in k])
-
-
