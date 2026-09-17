@@ -1,11 +1,14 @@
 from . import bp_home
 from flask import render_template, session, redirect, url_for
-
+from app.sql_strings import sql_home
 
 @bp_home.route("/")
 def index():
     if 'user' not in session:
         return redirect(url_for('bp_auth.login'))
+
+    # all users have access to the home page.
+    # home page will list attendance for the last 10 days.
 
     return render_template("home/index.html")
 
