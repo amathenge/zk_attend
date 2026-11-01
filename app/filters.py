@@ -2,8 +2,8 @@
 
 __all__ = ["ADMIN", "HR_MANAGER", "DATA_MANAGER", "USER_MANAGER",
            "VIEW_ONLY", "to_date", "nl2br", "isadmin",
-           "ishrmgr", "isdatamgr", "isusermgr", "hasauth"
-           "filters_init"]
+           "ishrmgr", "isdatamgr", "isusermgr", "hasauth",
+           "isviewonly", "filters_init"]
 __author__ = "Andrew Mathenge"
 __version__ = 0.1
 
@@ -19,7 +19,13 @@ from datetime import datetime
 # 4 = usermgr (user manager) can manage the user table (add/remove users and assign privileges
 #     except the super user privilege or data manager
 #
-from .constants import *
+# from .constants import *
+
+ADMIN=1
+HR_MANAGER=2
+DATA_MANAGER=3
+USER_MANAGER=4
+VIEW_ONLY=5
 
 def to_date(item, fmt):
     if isinstance(item, str):
@@ -54,6 +60,11 @@ def isusermgr(item):
         return USER_MANAGER in item
     return False
 
+def isviewonly(item):
+    if isinstance(item, tuple):
+        return VIEW_ONLY in item
+    return False
+
 def hasauth(item, check):
     # "item" and "check" are lists. The correct authorization categories are in "check"
     # if an item in "item" corresponds to an item in "check" then return True
@@ -76,3 +87,4 @@ def filters_init(app):
     app.add_template_filter(isdatamgr)
     app.add_template_filter(isusermgr)
     app.add_template_filter(hasauth)
+    app.add_template_filter(isviewonly)

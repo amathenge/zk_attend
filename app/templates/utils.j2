@@ -111,10 +111,12 @@
             <label for="email">Email</label> 
             <input class="form-control" type="text" id="email" name="email" maxlength="32" autofocus required>
         </div> 
+{#
         <div class="form-group my-2">
             <label for="password">Password</label>
             <input class="form-control" type="password" id="password" name="password" maxlength="32">
         </div>
+#}
         <div class="form-group d-grid my-2 text-center"> 
             <button class="btn btn-primary mt-3" type="submit" name="submit" id="submit" on>LOGIN</button>
         </div>
@@ -208,7 +210,9 @@
     <div class="navbar-nav">
         <a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.index') }}">Home</a>
         <a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.reports') }}">Staff</a>
-        <a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.downloads') }}">Reports</a>
+        {% if not user.auth|isviewonly %}
+        <a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.listreports') }}">Reports</a>
+        {% endif %}
     </div>
 </div>
 <div class="navbar-nav navbar-right">
@@ -219,21 +223,21 @@
             Data Management
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.import_data') }}">Import Data</a></li>
+            <li><a class="nav-item nav-link text-primary" href="{{ url_for('bp_data.importsetup') }}">Import Data</a></li>
             <li><a class="nav-item nav-link text-primary" href="{{ url_for('bp_home.edit_attendance') }}">Edit Staff Data</a></li>
         </ul>
     </li>
     {% endif %}    
-    {% if user.auth|isadmin or user.auth|isusermgr or user.auth|ishrmgr %}
+    {% if user.auth|isadmin or user.auth|isusermgr or user.auth|ishrmgr or user.auth|isdatamgr %}
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Staff &amp; Users
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-            {% if user.auth|isadmin or user.auth|isusermgr or user.auth|ishrmgr %}
+            {% if user.auth|isadmin or user.auth|isusermgr %}
             <li><a class="nav-item nav-link text-primary" href="#">MANAGE USERS</a></li>
             {% endif %}
-            {% if user.auth|isadmin or user.auth|isusermgr %}
+            {% if user.auth|isadmin or user.auth|isdatamgr %}
             <li><a class="nav-item nav-link text-primary" href="#">MANAGE STAFF</a></li>
             {% endif %}
         </ul>

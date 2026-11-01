@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "utils.j2" import nav %}
+
+{% set user = session['user'] %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col">
+        {{ nav(user) }}
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <p class="text-center h3 fw-bold">Fair Acres Attendance</p>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="row justify-content-center">
+            <div class="col">
+                <p class="h3 text-center fw-bold">{{ message|safe }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if importsuccess == false %}
+<div class="row justify-content-center">
+    <div class="col">
+        <p class="text-center text-danger fw-bold">IMPORT FAILED - PLEASE TRY AGAIN</p>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-center">
+    <div class="col">
+        <p class="text-center text-danger fw-bold">IMPORT COMPLETED SUCCESSFULLY</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

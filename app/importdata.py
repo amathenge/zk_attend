@@ -1,6 +1,6 @@
 from pyzk2 import ZK, const
 import sqlite3
-from sql_strings import sql_import
+from sql_strings import sql_import, sql_import_attend
 from datetime import datetime
 
 DEVICE_IP = '192.168.1.201'
@@ -57,6 +57,11 @@ try:
                     [record.user_id, att_date, att_time,
                      record.status, record.punch])
         db.commit()
+
+    # update the attendance table
+    sql = sql_import_attend
+    cur.execute(sql_import_attend)
+    db.commit()
 
 
 except Exception as e:

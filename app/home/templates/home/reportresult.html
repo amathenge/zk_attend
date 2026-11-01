@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from 'utils.j2' import nav %}
+
+{% block heading %}Report Results{% endblock %}
+
+{% set user = session['user'] %}
+
+{% block content %}
+<div class="row justify-content-center my-2">
+    <div class="col">
+    {{ nav(user) }}
+    </div>
+</div>
+<div class="row justify-content-center my-5">
+    <div class="col justify-content-center">
+        <p class="text-center fw-bold">{{ message }}</p>
+    </div>
+</div>
+<div class="row justify-content-center my-5">
+    <div class="col">
+        <p class="text-center">Select <a href="{{ url_for('bp_home.listreports') }}">LIST REPORTS</a> to see
+            a list of all reports.</p>
+    </div>
+</div>
+{% endblock %}

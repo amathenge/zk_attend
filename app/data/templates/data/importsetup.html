@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% from "utils.j2" import nav, submitbutton, cancelbutton %}
+
+{% set user = session['user'] %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col">
+        {{ nav(user) }}
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <p class="text-center h3 fw-bold">Fair Acres Attendance</p>
+    </div>
+</div>
+        
+<form action="{{ url_for('bp_data.importdata') }}" method="GET">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <p class="text-center text-danger font-weight-bold display-4">TO UPDATE DATA MAKE SURE THAT THERE ARE
+                NO USERS CLOCKING AT THE ATTENDANCE DEVICE
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            {{ submitbutton('IMPORT') }}
+        </div>
+        <div class="col-3">
+            <p>&nbsp;</p>
+        </div>
+        <div class="col-3">
+            {{ cancelbutton('CANCEL') }}
+        </div>
+    </div>
+</form>
+{% endblock %}

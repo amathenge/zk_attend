@@ -7,7 +7,9 @@ create table users (
     firstname varchar(16) not null,
     lastname varchar(16) not null,
     phone varchar(16) not null,
-    auth varchar(8) not null default '0'
+    auth varchar(8) not null default '0',
+    otp varchar(6) default null,
+    lastlogin datetime default NULL
 );
 
 .read sql/user_data.sql

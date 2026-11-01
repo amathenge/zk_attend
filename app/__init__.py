@@ -21,6 +21,9 @@ def create_app(conf = None):
     from .auth import bp_auth
     app.register_blueprint(bp_auth, url_prefix="/auth")
 
+    from .data import bp_data
+    app.register_blueprint(bp_data, url_prefix="/data")
+
     return app
 
 if __name__ == "__main__":

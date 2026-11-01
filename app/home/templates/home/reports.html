@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% from 'utils.j2' import nav %}
+
+{% block heading %}Hours Worked{% endblock %}
+
+{% set user = session['user'] %}
+
+{% block content %}
+<div class="row justify-content-center my-2">
+    <div class="col">
+    {{ nav(user) }}
+    </div>
+</div>
+<form action="{{ url_for('bp_home.reports') }}" method="POST">
+    <div class="row justify-content-center">
+        <div class="col">
+            <select class="form-select" id="selectstaff" name="selectstaff">
+                <option values="0">Select Staff</option>
+                {% for person in stafflist %}
+                <option value="{{ person.id }}">{{ person.firstname }}&nbsp;{{ person.lastname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col d-flex justify-content-start">
+            <button class="btn btn-primary" type="submit">Get Time Report</button>
+        </div>
+    </div>
+</form>
+{% if staff %}
+<div class="row justify-content-center border border-primary my-3 p-3">
+    <div class="col-4 justify-content-center">
+        <p class="text-end align-self-center">Selected id={{ staff.id }}, name={{ staff.fullname }}</p>
+    </div>
+    {% if not user.auth|isviewonly %}
+    <div class="col-4 d-grid justify-content-start">
+        <form action="{{ url_for('bp_home.exportdata', uid=staff.id) }}" method="POST">
+            <button class="btn btn-primary" type="submit">Export Data</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+<div class="row justify-content-center">
+    <div class="col justify-content-center">
+        {% if data %}
+        <table id="data_table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th>Date</th>
+                    <th>Day of Week</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Work Hours</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td scope="row">{{ loop.index }}</td>
+                    <td>{{ row['att_date']|to_date('%d %b %Y') }}</td>
+                    <td>{{ row['dayofweek'] }}</td>
+                    <td>{{ row['start_time'] }}</td>
+                    <td>{{ row['end_time'] }}</td>
+                    <td>{{ row['work_hours'] }}</td>
+                    <td>{{ row['message']|nl2br|safe }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">No Data</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block dt_run %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new DataTable('#data_table', {
+            ordering: true,
+            pageLength: 15,
+            lengthMenu: [15, 30, 45, 60],
+            order: [[0, 'asc']]
+        });
+    });
+</script>
+{% endblock %}

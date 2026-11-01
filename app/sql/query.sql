@@ -1,0 +1,1 @@
+select id, att_time from attendance where staff = 6 and att_date = '2026-10-17' order by id asc

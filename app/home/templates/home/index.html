@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% from "utils.j2" import nav %}
 
-{% block title %}FA Attendance{% endblock %}
 {% set user = session['user'] %}
 {% block content %}
 <div class="row justify-content-center">
@@ -15,4 +14,47 @@
     </div>
 </div>
 
+<div class="row justify-content-center">
+    <div class="col-8 justify-content-center">
+        {% if data %}
+        <table id="data_table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Staff ID</th>
+                    <th>Full Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td scope="row">{{ row['id'] }}</td>
+                    <td>{{ row['firstname'] }} {{ row['lastname'] }}</td>
+                    <td>{{ row['att_date']|to_date('%d %b %Y') }}</td>
+                    <td>{{ row['att_time'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">No Data</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block dt_run %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new DataTable('#data_table', {
+            ordering: true,
+            pageLength: 15,
+            lengthMenu: [15, 30, 45, 60],
+            order: [[2, 'desc'], [3, 'desc']]
+        });
+    });
+</script>
 {% endblock %}

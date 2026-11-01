@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% from 'utils.j2' import nav %}
+
+{% block scripts %}
+    <script src="https://kit.fontawesome.com/f74df82d77.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block heading %}Attendance Report - List Reports{% endblock %}
+
+{% set user = session['user'] %}
+
+{% block content %}
+<div class="row justify-content-center my-2">
+    <div class="col">
+    {{ nav(user) }}
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col justify-content-center">
+        {% if reports %}
+        <table id="data_table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th>Staff ID</th>
+                    <th>Report Date</th>
+                    <th>Report Name</th>
+                    <th>Download</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in reports %}
+                <tr>
+                    <td scope="row">{{ row.id }}</td>
+                    <td>{{ row.staff }}</td>
+                    <td>{{ row.filedate }}</td>
+                    <td>{{ row.filename }}</td>
+                    <td><a href="{{ url_for('bp_home.reportdownload', rid=row.id) }}"><i class="fa fa-download"></i></a></td>
+                    <td><a href="{{ url_for('bp_home.reportdelete', rid=row.id) }}"><i class="fa fa-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">No Data</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block dt_run %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new DataTable('#data_table', {
+            ordering: true,
+            pageLength: 15,
+            lengthMenu: [15, 30, 45, 60],
+            order: [[0, 'desc']]
+        });
+    });
+</script>
+{% endblock %}
