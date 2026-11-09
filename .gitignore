@@ -12,3 +12,4 @@ database.py
 sms.py
 sendEmail.py
 sql_strings.py
+.env

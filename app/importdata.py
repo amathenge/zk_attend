@@ -16,7 +16,7 @@ DEVICE_PORT = 4370
 """
 
 
-zk = ZK(DEVICE_IP, port=DEVICE_PORT, timeout=5, password=0, force_udp=False)
+zk = ZK(DEVICE_IP, port=DEVICE_PORT, timeout=5, password=0, force_udp=False, ommit_ping=True)
 conn = None
 
 punch_mapping = {

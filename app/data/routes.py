@@ -37,7 +37,7 @@ def importdata():
     if 'user' not in session:
         return redirect(url_for('bp_auth.login'))
         
-    zk = ZK(DEVICE_IP, port=DEVICE_PORT, timeout=5, password=0, force_udp=False)
+    zk = ZK(DEVICE_IP, port=DEVICE_PORT, timeout=5, password=0, force_udp=False, ommit_ping=True)
 
     punch_mapping = {
         0: "Check Out",

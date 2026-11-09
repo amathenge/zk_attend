@@ -124,6 +124,7 @@ def check_otp():
     if 'user' in session and session['user']['otp']:
         return redirect(url_for('bp_home.index'))
 
+    logger("about to check otp returned in check_otp()")
     now = datetime.now()
     now_string = now.strftime('%d%b%Y %H:%M:%S').upper()
     message = None
@@ -163,9 +164,11 @@ def check_otp():
 
 @bp_auth.route("/logout")
 def logout():
-    if 'user' in session:
-        logger(f"user {session['user']['email']} - logout")
-        del session['user']
-        session.modified = True
+    # if 'user' in session:
+    #     logger(f"user {session['user']['email']} - logout")
+    #     del session['user']
+    #     session.modified = True
 
+    logger(f"user {session['user']['email']} - logout")
+    session.clear()
     return render_template("auth/login.html")

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 class Config(object):
     DEBUG = True
@@ -11,3 +12,10 @@ class Config(object):
 
 class Default(Config):
     DEBUG = False
+
+class Production(Config):
+    DEBUG = False
+    DEVELOPMENT = False
+    SECRET_KEY = '5ae9ce4a61acdee13508aa211ccc883d1625adbc6dbed53b'
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=15)
+    SESSION_REFRESH_EACH_REQUEST = True

@@ -2,7 +2,7 @@ from flask import Flask
 import os
 from . import filters
 
-def create_app(conf = None):
+def create_app(conf = None):    
     app = Flask(__name__)
     filters.filters_init(app)
 
